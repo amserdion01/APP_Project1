@@ -42,6 +42,7 @@ class Categories():
                         cls.categories.append(decoded_category)
         except (JSONDecodeError, FileNotFoundError) as e:
             cls.categories = []
+        print(f'{cls.categories} - cls.categories')
         return cls.categories
 
     @classmethod
