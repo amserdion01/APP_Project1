@@ -44,7 +44,6 @@ class Products():
             for line in f:
                 data = loads(line)
                 data = json.loads(data)
-                print(data)
                 if no == 1:
                     temp = Amplifier(**data)
                 elif no == 2:
@@ -76,59 +75,84 @@ class Products():
                 print(data)
         
     @classmethod
-    def remove_product(self, no):
-        
+    def remove_product(self, no, name):
         products = self.load_products(no)
-        print("Below you can see the list of products requested:\n")
-        for prod in products:
-            print(prod.__dict__["name"])
-            
-        name = input("What is the name of the object you want to delete?\n")
         for product in products:
             if product.name == name:
                 print(f"The object: {product.__dict__} will be deleted")
                 products.remove(product)
                 break
         e = Encoder()
-        
         with open(self.checktype(no), 'w') as f:
             for prod in products:
                 prod = json.dumps(prod.__dict__)
                 dump(prod, f)
                 f.write('\n')
+    
     @classmethod
-    def cart(self, no):
-        
+    def add_to_cart(self, no):
         products = self.load_products(no)
         print("Below you can see the list of products requested:\n")
         for prod in products:
-            print(prod.__dict__["name"])
-            
+            print(prod.__dict__)
         name = input("What is the name of the object you want to add to cart?\n")
         for product in products:
             if product.name == name:
-                print(f"The object: {product.__dict__} will be deleted")
+                print(f"The product: {product.__dict__} is now in your cart")
                 p = product.__dict__
                 break
         e = Encoder()
-        print(p)
         with open("cart.txt", 'a') as f:
             dump(p, f)
             f.write('\n')   
-            
+    @classmethod                        
     def make_order(self):
+        cart = self.load_cart()
+        with open('cart.txt', 'w') as f:
+            pass 
+        amplifiers = self.load_products(1)
+        for am in amplifiers:
+            for item in cart:
+                if am.__dict__ == item:
+                    self.remove_product(1, am.name)
+        
+        recievers = self.load_products(2)
+        for rec in recievers:
+            for item in cart:
+                if rec.__dict__ == item:
+                    self.remove_product(2, rec.name)
+        turntables = self.load_products(3)
+        for turn in turntables:
+            for item in cart:
+                if turn.__dict__ == item:
+                    self.remove_product(3, turn.name)
+        print("Your order has been made")
+        
+    @classmethod            
+    def remove_from_cart(self):
+        cart = self.load_cart()
+        for product in cart:
+            print(product)
+        name = input("What is the name of the object you want to remove from cart?\n")
+        for product in cart:
+            if name == product["name"]:
+                print(f"The product: {product} is now removed from your cart")
+                cart.remove(product)
+                break
         with open("cart.txt", 'w') as f:
-            products = []
+            for prod in cart:
+                dump(prod, f)
+                f.write('\n')            
+    @classmethod
+    def load_cart(self):
+        with open("cart.txt", 'r') as f:
+            cart = []
             for line in f:
-                products.append(line)
-        amplifiers = self.load_products("amplifier.txt")
-        recievers = self.load_products("receiver.txt")
-        turntables = self.load_products("turntable.txt")
-        print(amplifiers)
-
-            
+                line.strip()
+                line = json.loads(line)
+                cart.append(line)
+        return cart     
+    
 if __name__ == "__main__":
     cat = Products()
-    cat.make_order()
-    
     

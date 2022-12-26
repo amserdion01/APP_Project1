@@ -35,35 +35,17 @@ def list_categories():
     except JSONDecodeError as e:
         categories = None
 
+def rmv_product(no):
+    products = Products.load_products(no)
+    print("Below you can see the list of products requested:\n")
+    for prod in products:
+        print(prod.__dict__["name"])
+    name = input("What is the name of the object you want to delete?\n")
+    Products.remove_product(no, name)  
+      
 def error_handler():
     print("Action not supported\n")
 if __name__ == "__main__":
-    # # below some usage examples
-    # # create some categories
-    # cat_1 = Category("Amplifiers")
-    # cat_2 = Category("Receivers")
-    # cat_3 = Category("Speakers")
-    # # add them inside the Categories collection, and also save them
-    # # on the disk
-    # Categories.add_category(cat_1)
-    # Categories.add_category(cat_2)
-    # Categories.add_category(cat_3)
-    # # display the existing categories
-    # try:
-    #     categories = Categories.load_categories()
-    #     for cat in categories:
-    #         print(cat.name)
-    # except JSONDecodeError as e:
-    #     categories = None
-    # # remove one category from the Categories collection
-    # Categories.remove_category(cat_3)
-    # # display again the existing categories
-    # for cat in categories:
-    #     print(cat.name)
-
-    # actions = {1 : list_categories, 2 : add_category, 3 : delete_category}
-    # action = actions.get(option, error_handler)
-    # action()
     while True:
         print("1.Category menu \n2.Product menu \n3.Order menu\n4.Exit\n")
         option = int(input("Enter an option between 1 and 4: "))
@@ -114,16 +96,39 @@ if __name__ == "__main__":
                             Products.add_product(t)
                         case 4:
                             t = int(input("Possible category of producs:\n1:Amplifier\t2:Reciever\t3:Turntable\nEnter the number of the wanted category: "))
-                            Products.remove_product(t) 
+                            rmv_product(t)
                         case 5:
                             print("Have a nice day!")
                             exit()
                         case _:
                             error_handler()
-                    ex = input("Do you want to exit the category menu? (y/n): ")       
+                    ex = input("Do you want to exit the product menu? (y/n): ")       
 
             #order menu
-            
+            case 3:
+                ex = "n"
+                while(ex == "n"):
+                    print("1.List all the products from the cart \n2.Add a product to the cart  \n3.Remove a product from the cart\n4.Make an order\n5.Exit\n")
+                    op = int(input("Enter an option between 1 and 3: "))  
+                    match op:
+                        case 1:
+                            cart = Products.load_cart()
+                            print(cart)
+                        case 2:
+                            t = int(input("Possible category of producs:\n1:Amplifier\t2:Reciever\t3:Turntable\nEnter the number of the wanted category: "))
+                            products= Products.load_products(t)
+                            i =1
+                            Products.add_to_cart(t)
+                        case 3:    
+                            Products.remove_from_cart()
+                        case 4:
+                            Products.make_order()
+                        case 5:
+                                print("Have a nice day!")
+                                exit()
+                        case _:
+                            error_handler()
+                    ex = input("Do you want to exit the order menu? (y/n): ")       
             #exit 
             case 4:
                 exit()
