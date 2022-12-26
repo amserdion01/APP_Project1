@@ -1,0 +1,2 @@
+"{\"name\": \"test\", \"chanel\": 3, \"color\": \"red\", \"size\": 4}"
+"{\"name\": \"sony\", \"chanel\": 5, \"color\": \"white\", \"size\": 7}"

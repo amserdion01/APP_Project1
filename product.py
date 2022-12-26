@@ -35,9 +35,9 @@ class Receiver(Product):
         self.size = size
 
 class Turntable(Product):
-    def __init__(self,name, speed, bluetooth, size):
+    def __init__(self,name, speed, color, size):
         super().__init__(name)
         self.speed = speed
-        self.bluetooth = bluetooth
+        self.color = color
         self.size = size
     
