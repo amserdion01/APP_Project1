@@ -1,3 +1,2 @@
 "{\"name\": \"as\", \"power\": 300, \"chanel\": 5, \"size\": 40}"
-"{\"name\": \"hi\", \"power\": 300, \"chanel\": 5, \"size\": 40}"
 "{\"name\": \"prod\", \"power\": 200, \"chanel\": 3, \"size\": 4}"

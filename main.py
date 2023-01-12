@@ -109,7 +109,7 @@ if __name__ == "__main__":
                 ex = "n"
                 while(ex == "n"):
                     print("1.List all the products from the cart \n2.Add a product to the cart  \n3.Remove a product from the cart\n4.Make an order\n5.Exit\n")
-                    op = int(input("Enter an option between 1 and 3: "))  
+                    op = int(input("Enter an option between 1 and 5: "))  
                     match op:
                         case 1:
                             cart = Products.load_cart()
